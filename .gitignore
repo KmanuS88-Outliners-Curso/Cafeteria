@@ -1,0 +1,134 @@
+# ============================================
+# SECRETOS Y CREDENCIALES — NUNCA SUBIR
+# ============================================
+.env
+.env.*
+!.env.example
+!.env.sample
+*.env
+.envrc
+
+# API keys / tokens / credenciales varias
+secrets/
+secret/
+credentials/
+credentials.json
+*.pem
+*.key
+*.cer
+*.crt
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+*.ppk
+auth.json
+.netrc
+.npmrc
+.pypirc
+
+# Archivos de configuración que suelen contener secretos
+config.local.*
+*.secret
+*.secrets
+*private*
+*.private.*
+
+# ============================================
+# EDITORES / IDEs
+# ============================================
+.vscode/
+!.vscode/settings.json.example
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Claude Code local
+.claude/
+CLAUDE.local.md
+
+# ============================================
+# SISTEMA OPERATIVO
+# ============================================
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ============================================
+# NODE / NPM (por si se agrega build tooling)
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+.yarn/
+package-lock.json.bak
+
+# ============================================
+# BUILD / DIST
+# ============================================
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.vite/
+.turbo/
+
+# ============================================
+# LOGS Y TEMPORALES
+# ============================================
+*.log
+logs/
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+tmp/
+temp/
+
+# ============================================
+# COVERAGE / TEST
+# ============================================
+coverage/
+.nyc_output/
+*.lcov
+
+# ============================================
+# MISC
+# ============================================
+.history/
+.vercel
+.netlify
