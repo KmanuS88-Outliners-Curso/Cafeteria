@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Origen — Café de especialidad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#f2ece1;
+    --bone-2:#ece4d4;
+    --ink:#1c150e;
+    --espresso:#2a1a0f;
+    --terracotta:#b4532a;
+    --ember:#e06b2b;
+    --moss:#5a6b3b;
+    --cream:#fff8ea;
+    --rule:rgba(28,21,14,.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--bone);color:var(--ink);font-family:'Fraunces',serif;overflow-x:hidden}
+  body{
+    background-image:
+      radial-gradient(ellipse at 15% 10%, rgba(224,107,43,.10), transparent 50%),
+      radial-gradient(ellipse at 90% 85%, rgba(90,107,59,.12), transparent 55%);
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.35;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .05 0 0 0 .35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  .mono{font-family:'JetBrains Mono',monospace;font-weight:500;letter-spacing:.04em;text-transform:uppercase;font-size:.72rem}
+
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.4rem 2.5rem;
+    backdrop-filter:blur(10px);
+    background:rgba(242,236,225,.6);
+    border-bottom:1px solid var(--rule);
+  }
+  .brand{font-weight:700;font-size:1.6rem;letter-spacing:-.02em;font-style:italic}
+  .brand sup{font-size:.5em;font-style:normal;margin-left:.2em;color:var(--terracotta)}
+  .nav-links{display:flex;gap:2rem}
+  .nav-links a{color:var(--ink);text-decoration:none;position:relative}
+  .nav-links a:hover{color:var(--terracotta)}
+  .nav-cta{
+    padding:.55rem 1.1rem;border:1px solid var(--ink);border-radius:999px;
+    background:var(--ink);color:var(--cream);transition:.3s;
+  }
+  .nav-cta:hover{background:var(--terracotta);border-color:var(--terracotta);color:var(--cream)!important}
+
+  .hero{
+    min-height:100vh;padding:10rem 2.5rem 4rem;
+    display:grid;grid-template-columns:1.4fr 1fr;gap:3rem;align-items:center;position:relative;
+  }
+  .hero-tag{display:flex;align-items:center;gap:.8rem;margin-bottom:2rem;color:var(--espresso)}
+  .hero-tag::before{content:"";width:44px;height:1px;background:var(--terracotta)}
+  h1.display{
+    font-size:clamp(3.5rem,10vw,9.5rem);
+    line-height:.88;letter-spacing:-.035em;font-weight:500;
+    font-variation-settings:"opsz" 144;
+  }
+  h1.display .ital{font-style:italic;font-weight:300;color:var(--terracotta)}
+  h1.display .tiny{display:block;font-size:.14em;letter-spacing:.3em;text-transform:uppercase;margin-top:1.4rem;color:var(--ink);font-family:'JetBrains Mono',monospace;font-weight:500}
+  .hero-lede{
+    margin-top:2.2rem;font-size:1.2rem;line-height:1.55;max-width:38ch;color:var(--espresso);
+  }
+  .hero-ctas{margin-top:2.4rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:.6rem;
+    padding:1rem 1.8rem;border-radius:999px;text-decoration:none;
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+    transition:.3s;
+  }
+  .btn-primary{background:var(--ink);color:var(--cream)}
+  .btn-primary:hover{background:var(--terracotta);transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+  .btn-ghost{color:var(--ink);border:1px solid var(--rule)}
+  .btn-ghost:hover{border-color:var(--ink)}
+
+  .hero-visual{position:relative;height:min(70vh,640px)}
+  .disc{
+    position:absolute;border-radius:50%;inset:0;
+    background:
+      radial-gradient(circle at 35% 30%, #5a3418 0%, #2a1a0f 60%, #15100a 100%);
+    box-shadow:
+      inset -40px -60px 80px rgba(0,0,0,.55),
+      inset 30px 30px 60px rgba(224,107,43,.15),
+      20px 40px 80px rgba(28,21,14,.35);
+    animation:spin 40s linear infinite;
+  }
+  .disc::after{
+    content:"";position:absolute;inset:12%;border-radius:50%;
+    background:radial-gradient(circle at 40% 40%, rgba(255,240,220,.08), transparent 60%);
+    border:1px dashed rgba(255,248,234,.12);
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .hero-meta{
+    position:absolute;bottom:-2rem;left:-2rem;
+    background:var(--cream);padding:1rem 1.3rem;border:1px solid var(--ink);
+    transform:rotate(-4deg);box-shadow:6px 6px 0 var(--ink);
+  }
+  .hero-meta strong{display:block;font-size:2rem;font-weight:500;font-style:italic;line-height:1}
+  .hero-meta span{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--espresso)}
+  .hero-badge{
+    position:absolute;top:8%;right:-1rem;width:140px;height:140px;
+    border-radius:50%;background:var(--terracotta);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;
+    padding:1rem;animation:float 6s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-12px) rotate(-2deg)}}
+
+  .ticker{
+    border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    overflow:hidden;white-space:nowrap;background:var(--ink);color:var(--cream);
+    padding:.9rem 0;
+  }
+  .ticker-track{display:inline-block;animation:ticker 30s linear infinite;font-family:'Fraunces',serif;font-size:1.6rem;font-style:italic}
+  .ticker-track span{margin:0 2rem;opacity:.8}
+  .ticker-track span.dot{color:var(--ember)}
+  @keyframes ticker{to{transform:translateX(-50%)}}
+
+  section{padding:7rem 2.5rem;position:relative}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;gap:2rem;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:1.2rem}
+  .section-head h2{font-size:clamp(2.5rem,6vw,5rem);line-height:.95;font-weight:500;letter-spacing:-.03em;max-width:14ch}
+  .section-head h2 em{color:var(--terracotta);font-weight:300}
+  .section-num{color:var(--espresso);opacity:.7}
+
+  .products{background:var(--bone-2)}
+  .product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--ink);border-left:1px solid var(--ink)}
+  .product{
+    border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    padding:2.2rem;min-height:420px;display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;overflow:hidden;transition:.4s;cursor:pointer;
+    background:var(--bone-2);
+  }
+  .product:hover{background:var(--cream)}
+  .product:hover .p-circle{transform:scale(1.15) translateY(-10px)}
+  .p-top{display:flex;justify-content:space-between;align-items:flex-start}
+  .p-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em}
+  .p-origin{font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--terracotta)}
+  .p-circle{
+    width:160px;height:160px;border-radius:50%;margin:1rem auto;transition:.6s cubic-bezier(.2,.8,.2,1);position:relative;
+  }
+  .p-circle.a{background:radial-gradient(circle at 35% 35%, #c98963, #6b3518 70%, #2a1a0f)}
+  .p-circle.b{background:radial-gradient(circle at 35% 35%, #e8d3a8, #b38754 70%, #5a3a1e)}
+  .p-circle.c{background:radial-gradient(circle at 35% 35%, #f2e8d6, #d9b57a 70%, #7a5a2e)}
+  .p-circle::after{content:"";position:absolute;inset:15%;border-radius:50%;border:1px dashed rgba(255,248,234,.2)}
+  .p-name{font-size:2rem;font-weight:500;line-height:1;margin-bottom:.4rem}
+  .p-name em{font-style:italic;color:var(--terracotta)}
+  .p-desc{font-size:.95rem;line-height:1.45;color:var(--espresso);margin-bottom:1rem}
+  .p-foot{display:flex;justify-content:space-between;align-items:baseline;border-top:1px dashed var(--rule);padding-top:.8rem}
+  .p-price{font-size:1.4rem;font-weight:500;font-style:italic}
+  .p-notes{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--moss)}
+
+  .about{background:var(--ink);color:var(--cream);position:relative;overflow:hidden}
+  .about::before{
+    content:"ORIGEN";position:absolute;bottom:-2rem;left:-1rem;font-size:22rem;font-weight:500;
+    color:rgba(255,248,234,.04);line-height:.8;letter-spacing:-.04em;pointer-events:none;
+  }
+  .about .section-head{border-color:rgba(255,248,234,.15)}
+  .about .section-head h2 em{color:var(--ember)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;position:relative;z-index:2}
+  .about-text p{font-size:1.15rem;line-height:1.65;margin-bottom:1.4rem;color:rgba(255,248,234,.82);max-width:50ch}
+  .about-text p:first-child{font-size:1.45rem;font-style:italic;color:var(--cream)}
+  .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem;border-top:1px solid rgba(255,248,234,.15);padding-top:2rem}
+  .stat strong{display:block;font-size:3.2rem;font-weight:500;line-height:1;color:var(--ember);font-style:italic}
+  .stat span{font-family:'JetBrains Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,248,234,.6);margin-top:.5rem;display:block}
+
+  .about-card{
+    background:var(--cream);color:var(--ink);padding:3rem 2.5rem;
+    position:relative;transform:rotate(1.5deg);
+    border:1px solid var(--ink);
+  }
+  .hours h3{font-size:.8rem;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.15em;margin-bottom:1.5rem;color:var(--terracotta)}
+  .hours-row{display:flex;justify-content:space-between;padding:.8rem 0;border-bottom:1px dashed var(--rule);font-size:1.05rem}
+  .hours-row:last-child{border:none}
+  .hours-row span:last-child{font-style:italic;color:var(--espresso)}
+  .addr{margin-top:2rem;padding-top:2rem;border-top:1px solid var(--ink);font-style:italic;font-size:1.1rem;line-height:1.5}
+  .addr strong{display:block;font-style:normal;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--terracotta);margin-bottom:.6rem}
+
+  .contact{background:var(--bone)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:5rem;align-items:start}
+  .contact-intro h2{font-size:clamp(2.5rem,6vw,5rem);line-height:.95;font-weight:500;letter-spacing:-.03em}
+  .contact-intro h2 em{color:var(--terracotta);font-style:italic;font-weight:300}
+  .contact-intro p{margin-top:2rem;font-size:1.15rem;line-height:1.6;color:var(--espresso);max-width:42ch}
+  .contact-info{margin-top:2.5rem;display:flex;flex-direction:column;gap:1rem}
+  .contact-info a{display:flex;align-items:center;gap:.8rem;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:.8rem;transition:.3s}
+  .contact-info a:hover{color:var(--terracotta);padding-left:.4rem}
+  .contact-info .mono{color:var(--espresso)}
+
+  form{display:grid;gap:1.6rem;background:var(--cream);padding:3rem;border:1px solid var(--ink);box-shadow:12px 12px 0 var(--ink);position:relative}
+  form::before{content:"→ DÉJANOS UN MENSAJE";position:absolute;top:-14px;left:2rem;background:var(--bone);padding:0 1rem;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;color:var(--ink)}
+  .field{display:flex;flex-direction:column;gap:.5rem}
+  .field label{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--espresso)}
+  .field input,.field textarea,.field select{
+    background:transparent;border:none;border-bottom:1px solid var(--ink);
+    padding:.7rem 0;font-family:'Fraunces',serif;font-size:1.1rem;color:var(--ink);
+    outline:none;transition:.3s;
+  }
+  .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--terracotta);padding-left:.4rem}
+  .field textarea{resize:vertical;min-height:100px;font-family:'Fraunces',serif}
+  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
+  form button{
+    margin-top:.5rem;padding:1.2rem 2rem;background:var(--ink);color:var(--cream);
+    border:none;border-radius:999px;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;
+    transition:.3s;display:flex;align-items:center;justify-content:center;gap:.8rem;
+  }
+  form button:hover{background:var(--terracotta);letter-spacing:.15em}
+
+  footer{
+    background:var(--ink);color:var(--cream);padding:4rem 2.5rem 2rem;
+    display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;border-top:4px solid var(--terracotta);
+  }
+  footer .brand{color:var(--cream);font-size:2.8rem}
+  footer p{color:rgba(255,248,234,.6);margin-top:1rem;max-width:30ch;line-height:1.5}
+  footer h4{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.2rem;color:var(--ember)}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+  footer a{color:rgba(255,248,234,.8);text-decoration:none;font-style:italic}
+  footer a:hover{color:var(--ember)}
+  .legal{grid-column:1/-1;border-top:1px solid rgba(255,248,234,.1);margin-top:2rem;padding-top:1.5rem;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.08em;color:rgba(255,248,234,.5);text-transform:uppercase}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:900px){
+    nav{padding:1rem 1.2rem}.nav-links{display:none}
+    .hero{grid-template-columns:1fr;padding:7rem 1.2rem 3rem;gap:4rem}
+    .hero-visual{height:60vh}
+    section{padding:5rem 1.2rem}
+    .product-grid{grid-template-columns:1fr}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:3rem}
+    .row-2{grid-template-columns:1fr}
+    form{padding:2rem 1.4rem;box-shadow:6px 6px 0 var(--ink)}
+    footer{grid-template-columns:1fr;padding:3rem 1.2rem 2rem}
+    .legal{flex-direction:column;gap:.6rem}
+    .about::before{font-size:9rem}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Origen<sup>●</sup></div>
+  <div class="nav-links mono">
+    <a href="#productos">Carta</a>
+    <a href="#local">El local</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <a href="#contacto" class="nav-cta mono">Reservar</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-text reveal">
+    <div class="hero-tag mono">Est. 2019 · Tostado en casa</div>
+    <h1 class="display">
+      Café<br>de<br>
+      <span class="ital">origen</span>
+      <span class="tiny">— un sorbo, una historia —</span>
+    </h1>
+    <p class="hero-lede">
+      Granos seleccionados de fincas pequeñas en Colombia, Etiopía y Guatemala.
+      Tostados cada semana. Servidos con una obsesión casi ridícula por el detalle.
+    </p>
+    <div class="hero-ctas">
+      <a href="#productos" class="btn btn-primary">Ver la carta →</a>
+      <a href="#local" class="btn btn-ghost">Nuestra historia</a>
+    </div>
+  </div>
+  <div class="hero-visual reveal">
+    <div class="disc"></div>
+    <div class="hero-badge">Tostado<br>fresco<br>cada semana</div>
+    <div class="hero-meta">
+      <strong>+120</strong>
+      <span>Perfiles catados al año</span>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Colombia · Huila</span><span class="dot">●</span>
+    <span>Etiopía · Yirgacheffe</span><span class="dot">●</span>
+    <span>Guatemala · Huehuetenango</span><span class="dot">●</span>
+    <span>Costa Rica · Tarrazú</span><span class="dot">●</span>
+    <span>Kenia · Nyeri</span><span class="dot">●</span>
+    <span>Colombia · Huila</span><span class="dot">●</span>
+    <span>Etiopía · Yirgacheffe</span><span class="dot">●</span>
+    <span>Guatemala · Huehuetenango</span><span class="dot">●</span>
+    <span>Costa Rica · Tarrazú</span><span class="dot">●</span>
+    <span>Kenia · Nyeri</span><span class="dot">●</span>
+  </div>
+</div>
+
+<section id="productos" class="products">
+  <div class="section-head reveal">
+    <h2>La carta,<br>en tres <em>actos</em>.</h2>
+    <div class="mono section-num">— 01 / Destacados</div>
+  </div>
+
+  <div class="product-grid">
+    <div class="product reveal">
+      <div class="p-top">
+        <span class="p-num">N.º 01</span>
+        <span class="p-origin">Colombia · Huila</span>
+      </div>
+      <div class="p-circle a"></div>
+      <div>
+        <h3 class="p-name">Flat <em>White</em></h3>
+        <p class="p-desc">Doble ristretto y leche texturizada con delicadeza. Cuerpo sedoso, notas a cacao y panela.</p>
+        <div class="p-foot">
+          <span class="p-price">$3.80</span>
+          <span class="p-notes">cacao · panela · almendra</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product reveal">
+      <div class="p-top">
+        <span class="p-num">N.º 02</span>
+        <span class="p-origin">Etiopía · Yirgacheffe</span>
+      </div>
+      <div class="p-circle b"></div>
+      <div>
+        <h3 class="p-name">V60 de <em>filtro</em></h3>
+        <p class="p-desc">Método manual, lento, sin prisas. Taza limpia, floral, con una acidez que recuerda al bergamota.</p>
+        <div class="p-foot">
+          <span class="p-price">$4.50</span>
+          <span class="p-notes">jazmín · bergamota · miel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="product reveal">
+      <div class="p-top">
+        <span class="p-num">N.º 03</span>
+        <span class="p-origin">Guatemala · Huehue</span>
+      </div>
+      <div class="p-circle c"></div>
+      <div>
+        <h3 class="p-name">Cold <em>Brew</em></h3>
+        <p class="p-desc">18 horas de infusión en frío. Sin amargor, con un perfil dulce a chocolate negro y ciruela.</p>
+        <div class="p-foot">
+          <span class="p-price">$4.20</span>
+          <span class="p-notes">chocolate · ciruela · roble</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="local" class="about">
+  <div class="section-head reveal">
+    <h2>El lugar donde<br>todo <em>empieza</em>.</h2>
+    <div class="mono section-num" style="color:rgba(255,248,234,.6)">— 02 / El local</div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>Origen nació en 2019 en un taller de carpintería abandonado. Paredes de ladrillo, vigas de madera, y una tostadora de hierro que zumba desde las seis de la mañana.</p>
+      <p>Trabajamos directamente con productores que conocemos por nombre. Compramos pequeño, tostamos fresco, y servimos solo lo que nosotros beberíamos con los ojos cerrados.</p>
+      <p>No somos el café más rápido del barrio. Somos el que recuerdas al día siguiente.</p>
+      <div class="about-stats">
+        <div class="stat"><strong>14</strong><span>Fincas aliadas</span></div>
+        <div class="stat"><strong>07</strong><span>Días, máximo, desde tueste</span></div>
+        <div class="stat"><strong>42</strong><span>Asientos en el local</span></div>
+        <div class="stat"><strong>05</strong><span>Años construyendo esto</span></div>
+      </div>
+    </div>
+
+    <div class="about-card reveal">
+      <div class="hours">
+        <h3>◉ Horario del local</h3>
+        <div class="hours-row"><span>Lun — Vie</span><span>7:00 — 19:00</span></div>
+        <div class="hours-row"><span>Sábado</span><span>8:00 — 20:00</span></div>
+        <div class="hours-row"><span>Domingo</span><span>9:00 — 14:00</span></div>
+      </div>
+      <div class="addr">
+        <strong>◉ Dónde encontrarnos</strong>
+        Calle del Molino 23,<br>
+        Barrio de las Letras,<br>
+        28012 Madrid.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="contact">
+  <div class="contact-grid">
+    <div class="contact-intro reveal">
+      <div class="mono section-num" style="margin-bottom:1.5rem">— 03 / Escríbenos</div>
+      <h2>Un <em>café</em>,<br>una conversación.</h2>
+      <p>¿Quieres reservar una cata, organizar un evento, o simplemente saber qué estamos tostando esta semana? Estamos a un mensaje.</p>
+      <div class="contact-info">
+        <a href="mailto:hola@origencafe.com">
+          <span class="mono">◉ EMAIL</span>
+          <span>hola@origencafe.com</span>
+        </a>
+        <a href="tel:+34910000000">
+          <span class="mono">◉ TELÉFONO</span>
+          <span>+34 910 000 000</span>
+        </a>
+        <a href="#">
+          <span class="mono">◉ INSTAGRAM</span>
+          <span>@origen.cafe</span>
+        </a>
+      </div>
+    </div>
+
+    <form class="reveal" onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Enviado — te escribimos pronto';this.querySelector('button').style.background='var(--moss)';">
+      <div class="row-2">
+        <div class="field">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" type="text" required placeholder="María López">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" required placeholder="tu@correo.com">
+        </div>
+      </div>
+      <div class="field">
+        <label for="asunto">Motivo</label>
+        <select id="asunto">
+          <option>Una reserva</option>
+          <option>Cata privada</option>
+          <option>Evento o catering</option>
+          <option>Granos al por mayor</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" required placeholder="Cuéntanos qué tienes en mente…"></textarea>
+      </div>
+      <button type="submit">Enviar mensaje →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="brand">Origen<sup>●</sup></div>
+    <p>Un café pequeño, hecho despacio, para gente que sabe esperar.</p>
+  </div>
+  <div>
+    <h4>Navegar</h4>
+    <ul>
+      <li><a href="#productos">Carta</a></li>
+      <li><a href="#local">El local</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Síguenos</h4>
+    <ul>
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">TikTok</a></li>
+      <li><a href="#">Newsletter</a></li>
+    </ul>
+  </div>
+  <div class="legal">
+    <span>© 2026 Origen Café · Madrid</span>
+    <span>Tostado con paciencia</span>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
