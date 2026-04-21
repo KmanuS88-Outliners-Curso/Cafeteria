@@ -4,6 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Origen — Café de especialidad</title>
+<script>
+  (function(){
+    var t = localStorage.getItem('theme');
+    if(!t){ t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; }
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -18,7 +25,33 @@
     --moss:#5a6b3b;
     --cream:#fff8ea;
     --rule:rgba(28,21,14,.18);
+    color-scheme:light;
   }
+  html[data-theme="dark"]{
+    --bone:#14100a;
+    --bone-2:#1c1710;
+    --ink:#f2ece1;
+    --espresso:#c9bfa4;
+    --terracotta:#e07a4a;
+    --ember:#ff8a4a;
+    --moss:#9bb06b;
+    --cream:#241e15;
+    --rule:rgba(242,236,225,.14);
+    color-scheme:dark;
+  }
+  html[data-theme="dark"] body::before{mix-blend-mode:screen;opacity:.12}
+  html[data-theme="dark"] nav{background:rgba(20,16,10,.65)}
+  html[data-theme="dark"] .nav-cta,
+  html[data-theme="dark"] .btn-primary,
+  html[data-theme="dark"] .ticker,
+  html[data-theme="dark"] .about,
+  html[data-theme="dark"] form button,
+  html[data-theme="dark"] footer{
+    background:#0a0806;color:#f2ece1;
+  }
+  html[data-theme="dark"] .ticker{border-top-color:rgba(242,236,225,.18);border-bottom-color:rgba(242,236,225,.18)}
+  html[data-theme="dark"] .nav-cta:hover{color:#fff8ea!important}
+  html[data-theme="dark"] .hero-badge{color:#fff8ea}
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{background:var(--bone);color:var(--ink);font-family:'Fraunces',serif;overflow-x:hidden}
   body{
@@ -50,6 +83,18 @@
     background:var(--ink);color:var(--cream);transition:.3s;
   }
   .nav-cta:hover{background:var(--terracotta);border-color:var(--terracotta);color:var(--cream)!important}
+  .nav-right{display:flex;gap:.8rem;align-items:center}
+  .theme-toggle{
+    background:transparent;border:1px solid var(--rule);color:var(--ink);
+    width:40px;height:40px;border-radius:999px;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:1rem;font-family:inherit;line-height:1;padding:0;transition:.3s;
+  }
+  .theme-toggle:hover{border-color:var(--ink);transform:rotate(12deg)}
+  .theme-icon-light,.theme-icon-dark{display:none}
+  html[data-theme="light"] .theme-icon-light,
+  html:not([data-theme]) .theme-icon-light{display:inline}
+  html[data-theme="dark"] .theme-icon-dark{display:inline}
 
   .hero{
     min-height:100vh;padding:10rem 2.5rem 4rem;
@@ -250,7 +295,13 @@
     <a href="#local">El local</a>
     <a href="#contacto">Contacto</a>
   </div>
-  <a href="#contacto" class="nav-cta mono">Reservar</a>
+  <div class="nav-right">
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+      <span class="theme-icon-light">☀</span>
+      <span class="theme-icon-dark">☾</span>
+    </button>
+    <a href="#contacto" class="nav-cta mono">Reservar</a>
+  </div>
 </nav>
 
 <section class="hero">
@@ -472,6 +523,22 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  (function(){
+    const btn = document.getElementById('themeToggle');
+    if(!btn) return;
+    const setLabel = () => {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      btn.setAttribute('aria-label', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+    };
+    setLabel();
+    btn.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      setLabel();
+    });
+  })();
 </script>
 </body>
 </html>
