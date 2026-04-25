@@ -461,20 +461,20 @@
       </div>
     </div>
 
-    <form class="reveal" onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Enviado — te escribimos pronto';this.querySelector('button').style.background='var(--moss)';">
+    <form id="reservaForm" class="reveal">
       <div class="row-2">
         <div class="field">
           <label for="nombre">Nombre</label>
-          <input id="nombre" type="text" required placeholder="María López">
+          <input id="nombre" name="nombre" type="text" required placeholder="María López">
         </div>
         <div class="field">
           <label for="email">Email</label>
-          <input id="email" type="email" required placeholder="tu@correo.com">
+          <input id="email" name="email" type="email" required placeholder="tu@correo.com">
         </div>
       </div>
       <div class="field">
         <label for="asunto">Motivo</label>
-        <select id="asunto">
+        <select id="asunto" name="motivo">
           <option>Una reserva</option>
           <option>Cata privada</option>
           <option>Evento o catering</option>
@@ -484,7 +484,7 @@
       </div>
       <div class="field">
         <label for="mensaje">Mensaje</label>
-        <textarea id="mensaje" required placeholder="Cuéntanos qué tienes en mente…"></textarea>
+        <textarea id="mensaje" name="mensaje" required placeholder="Cuéntanos qué tienes en mente…"></textarea>
       </div>
       <button type="submit">Enviar mensaje →</button>
     </form>
@@ -539,6 +539,57 @@
       setLabel();
     });
   })();
+</script>
+
+<script>
+  const SUPABASE_URL = 'https://qzmhuawigqzhrhimdwoc.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_ooG_qWKsGUcAeUvi0fVEWA_HYl59yV4';
+
+  const form = document.getElementById('reservaForm');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+
+    const payload = {
+      nombre: form.nombre.value.trim(),
+      email: form.email.value.trim(),
+      motivo: form.motivo.value,
+      mensaje: form.mensaje.value.trim(),
+    };
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/reservas`, {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const detail = await res.text();
+        console.error('Reserva fallo', res.status, detail);
+        throw new Error(`HTTP ${res.status}`);
+      }
+
+      btn.textContent = '✓ Enviado — te escribimos pronto';
+      btn.style.background = 'var(--moss)';
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      btn.textContent = '✗ Error — intenta de nuevo';
+      btn.style.background = 'var(--terracotta)';
+      btn.disabled = false;
+      setTimeout(() => { btn.textContent = original; btn.style.background = ''; }, 4000);
+    }
+  });
 </script>
 </body>
 </html>
